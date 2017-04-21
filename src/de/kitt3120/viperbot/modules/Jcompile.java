@@ -26,10 +26,10 @@ public class Jcompile extends Module {
         if (!super.onMessage(user, message, channel, isPrivate, args)) return false;
 
 
-        final String code = message.getContent()
+        final String code = "public class "+user.getId()+" {"+(message.getContent()
                 .replace("!scan ", "")
-                .replace("```", "");
-
+                .replace("```", ""))+"}";
+        final String name = code.split(" ")[2];
 
 
         Thread thread = new Thread(new Runnable() {
@@ -38,13 +38,12 @@ public class Jcompile extends Module {
             public void run() {
                 try {
 
-                    BufferedWriter bw = new BufferedWriter(new FileWriter("./" + user.getId() + ".java"));
+                    BufferedWriter bw = new BufferedWriter(new FileWriter("./" + name + ".java"));
                     bw.write(code);
                     bw.flush();
                     bw.close();
 
-                    p = Runtime.getRuntime().exec("javac ./" + user.getId() + ".java");
-
+                    p = Runtime.getRuntime().exec("javac ./" + user.getId() + ".java&&java " + user.getId());
                     BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
                     MessageBuilder msg = new MessageBuilder(channel).append("```\n");
                     String line;
@@ -60,7 +59,7 @@ public class Jcompile extends Module {
                     input.close();
                     File x = new File("./" + user.getId() + ".java");
                     x.delete();
-
+                    x= new File("./" + user.getId() + ".class");
                 } catch (Exception e) {
                     return;
                 }
