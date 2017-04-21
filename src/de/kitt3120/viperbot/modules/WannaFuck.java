@@ -21,7 +21,7 @@ public class WannaFuck extends Module {
     public boolean onMessage(User user, Message message, MessageChannel channel, boolean isPrivate, String[] args) {
         if(!super.onMessage(user, message, channel, isPrivate, args)) return false;
 
-        new MessageBuilder(channel).append("```MarkDown\n#Ye :heart: \n```").send();
+        new MessageBuilder(channel).append("```MarkDown\n#Ye\n```").send();
         return true;
     }
 

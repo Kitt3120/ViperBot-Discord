@@ -15,29 +15,6 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
 public class BotListener extends ListenerAdapter {
 
     @Override
-    public void onMessageReceived(MessageReceivedEvent event) {
-        Message message = event.getMessage();
-        User user = message.getAuthor();
-        MessageChannel channel = message.getChannel();
-        boolean isPrivate = message.isFromType(ChannelType.PRIVATE);
-
-        if (!event.getAuthor().equals(Core.jda.getSelfUser())) {
-            if (message.getContent().startsWith("!")) {
-                Core.moduleManager.handle(user, message, channel, isPrivate);
-                return;
-            } else {
-                if (message.getMentionedUsers().contains(Core.jda.getSelfUser())) {
-                    SelfUser u = Core.jda.getSelfUser();
-                    String msg = message.getContent().replace("@" + u.getName(), "");
-                    msg = msg.trim();
-                    AIBot.handle(channel, msg);
-                    return;
-                }
-            }
-        }
-    }
-
-    @Override
     public void onFriendRequestReceived(FriendRequestReceivedEvent event) {
         event.getFriendRequest().accept();
         new MessageBuilder(event.getUser().getPrivateChannel()).append("Thanks for adding me!").send();
@@ -46,8 +23,30 @@ public class BotListener extends ListenerAdapter {
     @Override
     public void onGenericEvent(Event event) {
         if (event instanceof MessageReceivedEvent) {
-            if (((MessageReceivedEvent) event).getMessage().getContent().startsWith("!")) return;
+            MessageReceivedEvent e = (MessageReceivedEvent) event;
+            Message message = e.getMessage();
+            User user = message.getAuthor();
+            MessageChannel channel = message.getChannel();
+            boolean isPrivate = message.isFromType(ChannelType.PRIVATE);
+
+            if (!e.getAuthor().equals(Core.jda.getSelfUser())) {
+                if (message.getContent().startsWith("!")) {
+                    Core.moduleManager.handle(user, message, channel, isPrivate);
+                    return;
+                } else {
+                    if (message.getMentionedUsers().contains(Core.jda.getSelfUser())) {
+                        SelfUser u = Core.jda.getSelfUser();
+                        String msg = message.getContent().replace("@" + u.getName(), "");
+                        msg = msg.trim();
+                        AIBot.handle(channel, msg);
+                        return;
+                    }
+                }
+            } else {
+                return;
+            }
         }
+
         try {
             Core.moduleManager.fireEvent(event);
         } catch (NullPointerException e) {}
