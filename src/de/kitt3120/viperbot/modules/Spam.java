@@ -20,9 +20,32 @@ public class Spam extends Module {
     @Override
     public boolean onMessage(User user, Message message, MessageChannel channel, boolean isPrivate, String[] args) {
         if(!super.onMessage(user, message, channel, isPrivate, args)) return false;
-        for(int i=0;i<Integer.parseInt(message.getContent().replace("!spam ",""));++i){
-            new MessageBuilder(channel).append("```MarkDown\n#S E N D  N U D E S\n```").send();
+
+        final MessageBuilder builder = new MessageBuilder(channel);
+        if (args.length == 0) {
+            builder.append("Please use it like this: !Spam <number>").send();
+            return true;
         }
+        final int times;
+        try {
+            times = Integer.parseInt(args[0]);
+        } catch (Exception e) {
+            builder.append(args[0] + " is not a valid number").send();
+            return true;
+        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < times; i++) {
+                    builder.append("```\n#SEND NUDES\n```").send();
+                    try {
+                        Thread.sleep(500L);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
         return true;
     }
 
