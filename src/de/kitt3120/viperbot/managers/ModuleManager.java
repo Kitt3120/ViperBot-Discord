@@ -27,6 +27,7 @@ public class ModuleManager {
         register(new Test());
         register(new WannaFuck());
         register(new Jcompile());
+        register(new Spam());
     }
 
     private void register(Module module) {

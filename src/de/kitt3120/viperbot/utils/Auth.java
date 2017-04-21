@@ -5,7 +5,7 @@ package de.kitt3120.viperbot.utils;
  */
 public class Auth {
 
-    public static String TOKEN = "-TOKEN-";
+    public static String TOKEN = "Changed the token bruh c:";
     public static String DEV_ID = "238645059329720330";
 
 }

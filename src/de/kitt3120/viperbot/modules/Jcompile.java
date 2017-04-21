@@ -47,8 +47,6 @@ public class Jcompile extends Module {
                     BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
                     MessageBuilder msg = new MessageBuilder(channel).append("```\n");
                     String line;
-
-
                     while ((line = input.readLine()) != null) {
                         msg = msg.append(line + "\n");
                     }
