@@ -9,4 +9,5 @@ and *JDA* by MinnDevelopment: https://github.com/DV8FromTheWorld/JDA
 
 # Developed
 by GuiltyCore https://github.com/Guiltycore
+
 and Kitt3120 https://github.com/Kitt3120
