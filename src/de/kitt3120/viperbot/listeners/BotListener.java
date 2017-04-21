@@ -40,7 +40,7 @@ public class BotListener extends ListenerAdapter {
     @Override
     public void onFriendRequestReceived(FriendRequestReceivedEvent event) {
         event.getFriendRequest().accept();
-        new MessageBuilder(event.getUser().getPrivateChannel()).append("Thanks for adding me!").appendEmote("smile").send();
+        new MessageBuilder(event.getUser().getPrivateChannel()).append("Thanks for adding me!").send();
     }
 
     @Override
