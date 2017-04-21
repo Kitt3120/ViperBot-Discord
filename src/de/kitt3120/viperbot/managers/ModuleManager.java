@@ -1,6 +1,7 @@
 package de.kitt3120.viperbot.managers;
 
 import de.kitt3120.viperbot.modules.Admin;
+import de.kitt3120.viperbot.modules.Flip;
 import de.kitt3120.viperbot.modules.Stop;
 import de.kitt3120.viperbot.objects.MessageBuilder;
 import de.kitt3120.viperbot.objects.Module;
@@ -24,6 +25,7 @@ public class ModuleManager {
         //TODO: Register modules
         register(new Admin());
         register(new Stop());
+        register(new Flip());
     }
 
     private void register(Module module) {

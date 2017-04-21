@@ -45,6 +45,9 @@ public class BotListener extends ListenerAdapter {
 
     @Override
     public void onGenericEvent(Event event) {
+        if (event instanceof MessageReceivedEvent) {
+            if (((MessageReceivedEvent) event).getMessage().getContent().startsWith("!")) return;
+        }
         try {
             Core.moduleManager.fireEvent(event);
         } catch (NullPointerException e) {
