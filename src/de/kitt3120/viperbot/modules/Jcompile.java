@@ -60,6 +60,7 @@ public class Jcompile extends Module {
                     File x = new File("./" + user.getId() + ".java");
                     x.delete();
                     x= new File("./" + user.getId() + ".class");
+                    x.delete();
                 } catch (Exception e) {
                     return;
                 }
