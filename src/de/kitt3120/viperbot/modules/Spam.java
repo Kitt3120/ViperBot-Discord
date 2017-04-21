@@ -42,7 +42,7 @@ public class Spam extends Module {
             @Override
             public void run() {
                 for (int i = 0; i < fTimes; i++) {
-                    builder.append("```\n#SEND NUDES\n```").send();
+                    builder.append("```MarkDown\n#SEND NUDES\n```").send();
                     try {
                         Thread.sleep(1000L);
                     } catch (InterruptedException e) {
