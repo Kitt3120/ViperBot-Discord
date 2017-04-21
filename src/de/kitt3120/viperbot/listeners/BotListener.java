@@ -27,7 +27,7 @@ public class BotListener extends ListenerAdapter {
             } else {
                 if (message.getMentionedUsers().contains(Core.jda.getSelfUser())) {
                     SelfUser u = Core.jda.getSelfUser();
-                    String msg = message.getContent().replaceFirst("@" + u.getName(), "");
+                    String msg = message.getContent().replace("@" + u.getName(), "");
                     msg = msg.trim();
                     AIBot.handle(channel, msg);
                     return;
