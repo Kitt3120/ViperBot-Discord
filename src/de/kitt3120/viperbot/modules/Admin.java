@@ -57,7 +57,11 @@ public class Admin extends Module {
                     for (User u : message.getMentionedUsers()) {
                         try {
                             boolean isAdmin = Core.adminManager.toggleAdmin(u);
-                            builder.append(u.getName() + " admin set to " + isAdmin + "\n");
+                            if (isAdmin) {
+                                builder.append(u.getName() + " is now an admin\n");
+                            } else {
+                                builder.append(u.getName() + " is not an admin anymore\n");
+                            }
                         } catch (IOException e) {
                             e.printStackTrace();
                             builder.append("There was an error saving the admins file. The admin changes may only be temporary now!! Please save with !admin save\n");
