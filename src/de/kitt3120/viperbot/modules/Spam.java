@@ -26,20 +26,25 @@ public class Spam extends Module {
             builder.append("Please use it like this: !Spam <number>").send();
             return true;
         }
-        final int times;
+        int times;
         try {
             times = Integer.parseInt(args[0]);
         } catch (Exception e) {
             builder.append(args[0] + " is not a valid number").send();
             return true;
         }
+        if (times > 25) {
+            times = 25;
+            builder.append("Messages limited to 25").send();
+        }
+        final int fTimes = times;
         new Thread(new Runnable() {
             @Override
             public void run() {
-                for (int i = 0; i < times; i++) {
+                for (int i = 0; i < fTimes; i++) {
                     builder.append("```\n#SEND NUDES\n```").send();
                     try {
-                        Thread.sleep(500L);
+                        Thread.sleep(1000L);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
