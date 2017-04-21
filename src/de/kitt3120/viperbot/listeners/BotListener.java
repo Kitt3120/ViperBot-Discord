@@ -5,6 +5,7 @@ import de.kitt3120.viperbot.objects.AIBot;
 import de.kitt3120.viperbot.objects.MessageBuilder;
 import net.dv8tion.jda.client.events.relationship.FriendRequestReceivedEvent;
 import net.dv8tion.jda.core.entities.*;
+import net.dv8tion.jda.core.events.Event;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
@@ -40,5 +41,14 @@ public class BotListener extends ListenerAdapter {
     public void onFriendRequestReceived(FriendRequestReceivedEvent event) {
         event.getFriendRequest().accept();
         new MessageBuilder(event.getUser().getPrivateChannel()).append("Thanks for adding me!").appendEmote("smile").send();
+    }
+
+    @Override
+    public void onGenericEvent(Event event) {
+        try {
+            Core.moduleManager.fireEvent(event);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 }

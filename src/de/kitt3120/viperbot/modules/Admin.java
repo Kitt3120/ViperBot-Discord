@@ -6,6 +6,7 @@ import de.kitt3120.viperbot.objects.Module;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.Event;
 
 import java.io.IOException;
 
@@ -84,5 +85,10 @@ public class Admin extends Module {
             }
         }
         return true;
+    }
+
+    @Override
+    public void fireEvent(Event event) {
+        return;
     }
 }

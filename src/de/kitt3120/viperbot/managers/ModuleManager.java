@@ -7,6 +7,7 @@ import de.kitt3120.viperbot.objects.Module;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.Event;
 
 import java.util.ArrayList;
 
@@ -54,6 +55,12 @@ public class ModuleManager {
                 args = content.split(" ");
             }
             foundModule.onMessage(user, message, channel, isPrivate, args);
+        }
+    }
+
+    public void fireEvent(Event event) {
+        for (Module module : modules) {
+            module.fireEvent(event);
         }
     }
 }

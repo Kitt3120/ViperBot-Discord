@@ -5,16 +5,19 @@ import de.kitt3120.viperbot.utils.Auth;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.Event;
+import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 /**
  * Created by kitt3120 on 20.04.2017.
  */
-public abstract class Module {
+public abstract class Module extends ListenerAdapter {
 
     private String name, description;
     private boolean hidden, onlyAdmin, onlyDev;
 
     public Module(String name, String description, boolean hidden, boolean onlyAdmin, boolean onlyDev) {
+        Core.jda.addEventListener(this);
         this.name = name;
         this.description = description;
         this.hidden = hidden;
@@ -37,6 +40,8 @@ public abstract class Module {
         }
         return true;
     }
+
+    public abstract void fireEvent(Event event);
 
     private void disallow(MessageChannel channel) {
         new MessageBuilder(channel).append("You are not allowed to do this command").send();

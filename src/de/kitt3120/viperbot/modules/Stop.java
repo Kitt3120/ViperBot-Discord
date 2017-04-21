@@ -6,6 +6,7 @@ import de.kitt3120.viperbot.objects.Module;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.Event;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -31,5 +32,10 @@ public class Stop extends Module {
             }
         }, 1, TimeUnit.SECONDS);
         return true;
+    }
+
+    @Override
+    public void fireEvent(Event event) {
+        return;
     }
 }
