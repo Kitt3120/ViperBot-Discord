@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="ViperBotDiscord:jar">
+    <output-path>$USER_HOME$/Desktop</output-path>
+    <root id="archive" name="ViperBotDiscord.jar">
+      <element id="module-output" name="ViperBot" />
+      <element id="extracted-dir" path="H:/APIS/Discord/JDA/JDA-3.0.0_181-withDependencies.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
