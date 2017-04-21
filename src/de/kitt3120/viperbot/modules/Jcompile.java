@@ -66,7 +66,7 @@ public class Jcompile extends Module {
                 }
             }
         });
-
+        thread.run();
         return true;
     }
 
