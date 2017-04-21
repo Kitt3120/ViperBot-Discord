@@ -50,8 +50,6 @@ public class BotListener extends ListenerAdapter {
         }
         try {
             Core.moduleManager.fireEvent(event);
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
+        } catch (NullPointerException e) {}
     }
 }
