@@ -15,7 +15,7 @@ public class WannaFuck extends Module {
 
 
     public WannaFuck() {
-        super("wannafuck?", "Ye", false, false, false);
+        super("WannaFuck?", "Ye", false, false, false);
     }
     @Override
     public boolean onMessage(User user, Message message, MessageChannel channel, boolean isPrivate, String[] args) {
