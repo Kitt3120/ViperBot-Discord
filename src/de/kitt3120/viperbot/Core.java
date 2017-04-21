@@ -44,7 +44,6 @@ public class Core {
                 return GameType.DEFAULT;
             }
         }, false);
-        System.out.println("Set Presence");
     }
 
     public static void stop() {
