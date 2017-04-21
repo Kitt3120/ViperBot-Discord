@@ -1,5 +1,6 @@
 package de.kitt3120.viperbot.objects;
 
+
 import com.google.code.chatterbotapi.ChatterBot;
 import com.google.code.chatterbotapi.ChatterBotFactory;
 import com.google.code.chatterbotapi.ChatterBotSession;

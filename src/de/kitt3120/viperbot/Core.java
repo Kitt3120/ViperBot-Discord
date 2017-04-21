@@ -2,6 +2,7 @@ package de.kitt3120.viperbot;
 
 import de.kitt3120.viperbot.listeners.BotListener;
 import de.kitt3120.viperbot.managers.AdminManager;
+import de.kitt3120.viperbot.managers.DDoSManager;
 import de.kitt3120.viperbot.managers.FileManager;
 import de.kitt3120.viperbot.managers.ModuleManager;
 import de.kitt3120.viperbot.objects.AIBot;
@@ -24,6 +25,7 @@ public class Core {
     public static FileManager fileManager;
     public static AdminManager adminManager;
     public static ModuleManager moduleManager;
+    public static DDoSManager ddosManager;
 
     public static JDA jda;
 
@@ -55,6 +57,16 @@ public class Core {
             System.out.println("AdminManager: Error - " + e.getMessage());
         }
 
+        try {
+            ddosManager.saveUsers();
+            System.out.println("DDoSManager: saved");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("DDoSManager: Error - " + e.getMessage());
+        }
+
+        jda.shutdown();
+
         System.exit(0);
     }
 
@@ -70,6 +82,7 @@ public class Core {
         fileManager = new FileManager();
         adminManager = new AdminManager();
         moduleManager = new ModuleManager();
+        ddosManager = new DDoSManager();
 
         AIBot.setup();
 

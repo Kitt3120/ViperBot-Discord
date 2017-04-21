@@ -11,8 +11,6 @@ import net.dv8tion.jda.core.events.Event;
  * Created by yvesdaniel on 21/04/17.
  */
 public class WannaFuck extends Module {
-    //Code ya command C:
-
 
     public WannaFuck() {
         super("WannaFuck?", "Ye", false, false, false);

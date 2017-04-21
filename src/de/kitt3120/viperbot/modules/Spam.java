@@ -13,7 +13,7 @@ import net.dv8tion.jda.core.events.Event;
 public class Spam extends Module {
 
     public Spam() {
-        super("spam", "Spam", false, false, false);
+        super("Spam", "Spams", false, false, false);
     }
 
 
@@ -42,7 +42,7 @@ public class Spam extends Module {
             @Override
             public void run() {
                 for (int i = 0; i < fTimes; i++) {
-                    builder.append("```MarkDown\n#SEND NUDES\n```").send();
+                    builder.append("```\n#SEND NUDES\n```").send();
                     try {
                         Thread.sleep(1000L);
                     } catch (InterruptedException e) {
