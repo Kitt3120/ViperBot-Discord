@@ -1,6 +1,5 @@
 package de.kitt3120.viperbot.managers;
 
-import de.kitt3120.viperbot.modules.Jcompile;
 import de.kitt3120.viperbot.modules.active.*;
 import de.kitt3120.viperbot.modules.passive.Greetings;
 import de.kitt3120.viperbot.objects.MessageBuilder;

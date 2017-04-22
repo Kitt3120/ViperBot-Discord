@@ -1,4 +1,4 @@
-package de.kitt3120.viperbot.modules;
+package de.kitt3120.viperbot.modules.active;
 
 import de.kitt3120.viperbot.objects.MessageBuilder;
 import de.kitt3120.viperbot.objects.Module;
@@ -12,9 +12,9 @@ import java.io.*;
 /**
  * Created by yvesdaniel on 21/04/17.
  */
-public class JCompiler extends Module {
-    public JCompiler() {
-        super("JCompile", "Java Compiler", false, false, false);
+public class Jcompile extends Module {
+    public Jcompile() {
+        super("jcompile", "java compiler", false, false, false);
     }
 
     @Override
@@ -23,9 +23,9 @@ public class JCompiler extends Module {
         if (!super.onMessage(user, message, channel, isPrivate, args)) return false;
 
 
-        final String code = "public class " + user.getId() + " {" + (message.getContent()
+        final String code = "public class "+user.getId()+" {"+(message.getContent()
                 .replace("!scan ", "")
-                .replace("```", "")) + "}";
+                .replace("```", ""))+"}";
         final String name = code.split(" ")[2];
 
 
@@ -40,25 +40,21 @@ public class JCompiler extends Module {
                     bw.flush();
                     bw.close();
 
-                    p = Runtime.getRuntime().exec("javac ./" + user.getId() + ".java");
+                    p = Runtime.getRuntime().exec("javac ./" + user.getId() + ".java&&java " + user.getId());
                     BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
                     MessageBuilder msg = new MessageBuilder(channel).append("```\n");
                     String line;
                     while ((line = input.readLine()) != null) {
                         msg = msg.append(line + "\n");
                     }
-                    p = Runtime.getRuntime().exec("java " + user.getId());
-                    input = new BufferedReader(new InputStreamReader(p.getInputStream()));
-                    while ((line = input.readLine()) != null) {
-                        msg = msg.append(line + "\n");
-                    }
+
                     msg.append("```");
                     msg.send();
 
                     input.close();
                     File x = new File("./" + user.getId() + ".java");
                     x.delete();
-                    x = new File("./" + user.getId() + ".class");
+                    x= new File("./" + user.getId() + ".class");
                     x.delete();
                 } catch (Exception e) {
                     return;
