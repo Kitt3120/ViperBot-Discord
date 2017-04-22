@@ -28,7 +28,7 @@ public class EditMessageTrigger extends Module{
         if (event instanceof GuildMessageUpdateEvent) {
             GuildMessageUpdateEvent guildMessageUpdateEvent = (GuildMessageUpdateEvent) event;
             if (guildMessageUpdateEvent.getGuild().getId().equalsIgnoreCase("304612512224116736")) {
-                new MessageBuilder(guildMessageUpdateEvent.getMessage().getChannel()).append(guildMessageUpdateEvent.getMessage().getAuthor().getName()+" edited this message : ```"+guildMessageUpdateEvent.getMessage().getContent()+"```\n LULULULULULU").send();
+                new MessageBuilder(guildMessageUpdateEvent.getMessage().getChannel()).append(guildMessageUpdateEvent.getMessage().getAuthor().getName()+" edited this message: ```"+guildMessageUpdateEvent.getMessage().getContent()+"```\n LULULULULULU").send();
             }
         }
     }
