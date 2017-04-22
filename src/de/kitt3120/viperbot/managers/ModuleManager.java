@@ -34,6 +34,7 @@ public class ModuleManager {
         register(new Spam());
         register(new DDoSPermission());
         register(new DDoS());
+        register(new BotChat());
 
         //Passive
         register(new Greetings());
