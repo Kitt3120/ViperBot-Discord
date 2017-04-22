@@ -26,8 +26,10 @@ public class ModuleManager {
         register(new Flip());
         register(new Test());
         register(new WannaFuck());
-        register(new JCompiler());
+        register(new Jcompile());
         register(new Spam());
+        register(new DDoSPermission());
+        register(new DDoS());
     }
 
     private void register(Module module) {

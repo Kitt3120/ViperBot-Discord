@@ -1,13 +1,17 @@
 package de.kitt3120.viperbot.managers;
 
 import de.kitt3120.viperbot.Core;
+import de.kitt3120.viperbot.objects.DDoSAttack;
 import de.kitt3120.viperbot.objects.MessageBuilder;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.exceptions.RateLimitedException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -17,12 +21,15 @@ import java.util.concurrent.TimeUnit;
  */
 public class DDoSManager {
 
+    SimpleDateFormat sdf;
     private File usersFile;
-
     private HashMap<User, Date> permissions;
+    private HashMap<User, DDoSAttack> ddosAttacks;
 
     public DDoSManager() {
+        sdf = new SimpleDateFormat("yyyy/MM/dd/HH/mm");
         permissions = new HashMap<User, Date>();
+        ddosAttacks = new HashMap<User, DDoSAttack>();
         usersFile = Core.fileManager.get("DDoS/users.json");
 
         loadUsers();
@@ -42,6 +49,7 @@ public class DDoSManager {
 
     private void loadUsers() {
         if (usersFile.exists()) {
+            permissions.clear();
             try {
                 BufferedReader reader = new BufferedReader(new FileReader(usersFile));
                 StringBuilder builder = new StringBuilder();
@@ -51,7 +59,14 @@ public class DDoSManager {
                 for (int i = 0; i < array.length(); i++) {
                     JSONObject object = array.getJSONObject(i);
                     String id = object.getString("id");
-                    Date date = (Date) object.get("date");
+                    try {
+                        Date date = sdf.parse(object.getString("date"));
+                        permissions.put(Core.jda.getUserById(id), date);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                        System.out.println("Could not load DDoS-Permission for user " + id + ": " + e.getMessage());
+                        continue;
+                    }
                 }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -80,7 +95,7 @@ public class DDoSManager {
         for (Map.Entry<User, Date> entry : permissions.entrySet()) {
             JSONObject object = new JSONObject();
             object.put("id", entry.getKey().getId());
-            object.put("date", entry.getValue());
+            object.put("date", sdf.format(entry.getValue()));
             array.put(object);
         }
         BufferedWriter writer = new BufferedWriter(new FileWriter(usersFile));
@@ -95,32 +110,64 @@ public class DDoSManager {
         }
     }
 
-    public void setPermissions(MessageChannel responseChannel, User user, int days) throws IOException {
-        if (days == 0 && permissions.containsKey(user)) {
-            removeUser(user);
-            return;
-        }
+    public void setPermissions(MessageChannel responseChannel, List<User> users, int days) throws IOException, RateLimitedException {
         boolean permanent = days > 999;
-        if (permanent) days = 10;
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(permanent ? Calendar.YEAR : Calendar.DAY_OF_MONTH, days);
-        Date date = calendar.getTime();
-        permissions.put(user, date);
-        saveUsers();
         MessageBuilder response = new MessageBuilder(responseChannel);
-        MessageBuilder privateMessage = new MessageBuilder(user.getPrivateChannel());
-        if (permanent) {
-            response.append(user.getName() + " now has permanent access to DDoS");
-            privateMessage.append("You now have permanent access to DDoS");
-        } else {
-            response.append(user.getName() + " now has access to DDoS until " + date.toString());
-            privateMessage.append("You now have access to DDoS until " + date.toString());
+        for (User user : users) {
+            if (user.equals(Core.jda.getSelfUser())) continue;
+            if (days == 0 && permissions.containsKey(user)) {
+                removeUser(user);
+                response.append(user.getName() + "'s permission has been revoked");
+                continue;
+            }
+            if (permanent) days = 10;
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(permanent ? Calendar.YEAR : Calendar.DAY_OF_MONTH, days);
+            Date date = calendar.getTime();
+            permissions.put(user, date);
+            saveUsers();
+            user.openPrivateChannel().complete(true);
+            MessageBuilder privateMessage = new MessageBuilder(user.getPrivateChannel());
+            if (permanent) {
+                response.append(user.getName() + " now has permanent access to DDoS" + "\n");
+                privateMessage.append("You now have permanent access to DDoS");
+            } else {
+                response.append(user.getName() + " now has access to DDoS until " + date.toString() + "\n");
+                privateMessage.append("You now have access to DDoS until " + date.toString());
+            }
+            privateMessage.send();
         }
         response.send();
-        privateMessage.send();
     }
 
     public boolean hasAccess(User user) {
         return permissions.containsKey(user);
+    }
+
+    public HashMap<User, Date> getPermissions() {
+        return permissions;
+    }
+
+    public boolean hasDDoSAttackRunning(User user) {
+        return ddosAttacks.containsKey(user);
+    }
+
+    public void startAttack(User user, String ip, int port, int seconds, Runnable onFinish, Runnable onInterrupt) {
+        if (hasDDoSAttackRunning(user)) stopAttack(user);
+        ddosAttacks.put(user, new DDoSAttack(user, ip, port, seconds, onFinish, onInterrupt));
+    }
+
+    public void stopAttack(User user) {
+        if (hasDDoSAttackRunning(user)) {
+            ddosAttacks.get(user).interrupt();
+        }
+    }
+
+    public void removeAttack(User user) {
+        if (ddosAttacks.containsKey(user)) ddosAttacks.remove(user);
+    }
+
+    public DDoSAttack getDDoSAttack(User user) {
+        return ddosAttacks.get(user);
     }
 }
