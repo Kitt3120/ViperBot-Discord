@@ -1,4 +1,4 @@
-package de.kitt3120.viperbot.modules;
+package de.kitt3120.viperbot.modules.active;
 
 import de.kitt3120.viperbot.Core;
 import de.kitt3120.viperbot.objects.MessageBuilder;

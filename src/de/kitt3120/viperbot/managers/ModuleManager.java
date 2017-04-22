@@ -1,6 +1,8 @@
 package de.kitt3120.viperbot.managers;
 
-import de.kitt3120.viperbot.modules.*;
+import de.kitt3120.viperbot.modules.Jcompile;
+import de.kitt3120.viperbot.modules.active.*;
+import de.kitt3120.viperbot.modules.passive.Greetings;
 import de.kitt3120.viperbot.objects.MessageBuilder;
 import de.kitt3120.viperbot.objects.Module;
 import net.dv8tion.jda.core.entities.Message;
@@ -21,6 +23,8 @@ public class ModuleManager {
         modules = new ArrayList<Module>();
 
         //TODO: Register modules
+
+        //Active
         register(new Admin());
         register(new Stop());
         register(new Flip());
@@ -30,6 +34,9 @@ public class ModuleManager {
         register(new Spam());
         register(new DDoSPermission());
         register(new DDoS());
+
+        //Passive
+        register(new Greetings());
     }
 
     private void register(Module module) {
