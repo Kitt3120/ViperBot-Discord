@@ -2,6 +2,7 @@ package de.kitt3120.viperbot.managers;
 
 import de.kitt3120.viperbot.modules.active.*;
 import de.kitt3120.viperbot.modules.passive.Greetings;
+import de.kitt3120.viperbot.modules.passive.SeeYa;
 import de.kitt3120.viperbot.objects.MessageBuilder;
 import de.kitt3120.viperbot.objects.Module;
 import net.dv8tion.jda.core.entities.Message;
@@ -36,6 +37,7 @@ public class ModuleManager {
 
         //Passive
         register(new Greetings());
+        register(new SeeYa());
     }
 
     private void register(Module module) {
