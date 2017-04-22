@@ -6,7 +6,9 @@ import com.google.code.chatterbotapi.ChatterBotFactory;
 import com.google.code.chatterbotapi.ChatterBotSession;
 import com.google.code.chatterbotapi.ChatterBotType;
 import net.dv8tion.jda.core.entities.MessageChannel;
+import net.dv8tion.jda.core.entities.User;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.Executors;
@@ -17,6 +19,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class AIBot {
 
+    public static ArrayList<User> botChatToggled = new ArrayList<>();
     private static ChatterBotFactory factory;
     private static HashMap<MessageChannel, ChatterBot> bots = new HashMap<MessageChannel, ChatterBot>();
     private static HashMap<MessageChannel, ChatterBotSession> sessions = new HashMap<MessageChannel, ChatterBotSession>();

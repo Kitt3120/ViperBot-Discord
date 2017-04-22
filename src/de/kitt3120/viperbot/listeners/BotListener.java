@@ -34,7 +34,7 @@ public class BotListener extends ListenerAdapter {
                     Core.moduleManager.handle(user, message, channel, isPrivate);
                     return;
                 } else {
-                    if (message.getMentionedUsers().contains(Core.jda.getSelfUser())) {
+                    if (message.getMentionedUsers().contains(Core.jda.getSelfUser()) || AIBot.botChatToggled.contains(user)) {
                         SelfUser u = Core.jda.getSelfUser();
                         String msg = message.getContent().replace("@" + u.getName(), "");
                         msg = msg.trim();
