@@ -14,6 +14,8 @@ import net.dv8tion.jda.core.OnlineStatus;
 import net.dv8tion.jda.core.entities.Game;
 
 import java.io.IOException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by kitt3120 on 20.04.2017.
@@ -67,7 +69,12 @@ public class Core {
 
         jda.shutdown();
 
-        System.exit(0);
+        Executors.newSingleThreadScheduledExecutor().schedule(new Runnable() {
+            @Override
+            public void run() {
+                System.exit(0);
+            }
+        }, 1, TimeUnit.SECONDS);
     }
 
     public static void main(String[] args) {

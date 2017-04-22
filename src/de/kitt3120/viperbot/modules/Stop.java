@@ -8,9 +8,6 @@ import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.Event;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-
 /**
  * Created by kitt3120 on 21.04.2017.
  */
@@ -25,12 +22,7 @@ public class Stop extends Module {
         if (!super.onMessage(user, message, channel, isPrivate, args)) return false;
 
         new MessageBuilder(channel).append("Restarting").send();
-        Executors.newSingleThreadScheduledExecutor().schedule(new Runnable() {
-            @Override
-            public void run() {
-                Core.stop();
-            }
-        }, 1, TimeUnit.SECONDS);
+        Core.stop();
         return true;
     }
 
