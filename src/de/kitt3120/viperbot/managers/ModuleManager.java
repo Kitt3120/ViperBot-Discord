@@ -1,6 +1,7 @@
 package de.kitt3120.viperbot.managers;
 
 import de.kitt3120.viperbot.modules.active.*;
+import de.kitt3120.viperbot.modules.passive.EditMessageTrigger;
 import de.kitt3120.viperbot.modules.passive.Greetings;
 import de.kitt3120.viperbot.modules.passive.SeeYa;
 import de.kitt3120.viperbot.objects.MessageBuilder;
@@ -38,6 +39,7 @@ public class ModuleManager {
         //Passive
         register(new Greetings());
         register(new SeeYa());
+        register(new EditMessageTrigger());
     }
 
     private void register(Module module) {
