@@ -36,6 +36,7 @@ public class ModuleManager {
         register(new DDoSPermission());
         register(new DDoS());
         register(new BotChat());
+        register(new GetPornWebsite());
 
         //Passive
         register(new Greetings());
