@@ -26,6 +26,7 @@ public class Jcompile extends Module {
         final String code = "public class " + user.getId() + " {" + (message.getContent()
                 .replace("!jcompile ", "")
                 .replace("```", "")) + "}";
+
         final String name = code.split(" ")[2];
 
 
