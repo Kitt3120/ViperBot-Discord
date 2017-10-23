@@ -8,6 +8,6 @@ This project uses the *ChatterBot-API* by pierredavidbelanger: https://github.co
 and *JDA* by MinnDevelopment: https://github.com/DV8FromTheWorld/JDA
 
 # Developed
-by GuiltyCore https://github.com/Guiltycore
+by Yves Daniel https://github.com/yves-daniel
 
 and Kitt3120 https://github.com/Kitt3120
